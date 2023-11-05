@@ -25,7 +25,18 @@ def show_menu():
             remove_packages_by_price()
         if command == "6":
             get_packages_by_interval()
-
+        if command == "7":
+            get_packages_by_destination_and_price()
+        if command == "8":
+            get_packages_by_end_date()
+        if command == "9":
+            get_no_packages_by_destination()
+        if command == "10":
+            get_packages_by_interval_sorted()
+        if command == "11":
+            get_average_price_by_destination()
+        if command == "12":
+            remove_packages_by_price_and_another_destination()
 
 
 def create_package():
@@ -87,9 +98,86 @@ def get_packages_by_interval():
         print(str(e))
 
 
+def get_packages_by_destination_and_price():
+    input_destination = read_destination()
+    input_price = read_price()
+    try:
+        packages = service.service_get_packages_by_destination_and_price(input_destination, input_price)
+        print_packages(packages)
+    except Exception as e:
+        print(str(e))
+
+
+def get_packages_by_interval_sorted():
+    input_start_date = read_start_date()
+    input_end_date = read_end_date()
+    try:
+        packages = service.service_get_packages_by_date_interval(input_start_date, input_end_date)
+        packages.sort(key=lambda x: x.price)
+        print_packages(packages)
+    except Exception as e:
+        print(str(e))
+
+
+def get_packages_by_end_date():
+    input_date = read_end_date()
+    try:
+        packages = service.service_get_packages_by_end_date(input_date)
+        print_packages(packages)
+    except Exception as e:
+        print(str(e))
+
+
+def get_no_packages_by_destination():
+    input_destination = read_destination()
+    try:
+        no_packages = service.service_get_no_packages_by_destination(input_destination)
+        print_no_packages(no_packages)
+    except Exception as e:
+        print(str(e))
+
+
+def get_average_price_by_destination():
+    input_destination = read_destination()
+    try:
+        average = service.service_get_average_price_by_destination(input_destination)
+        print_average(average, input_destination)
+    except Exception as e:
+        print(str(e))
+
+
+def remove_packages_by_price_and_another_destination():
+    input_price = read_price()
+    input_destination = read_destination()
+    try:
+        remove_packages = service.service_remove_packages_by_price_and_another_destination(input_price,
+                                                                                           input_destination)
+        print_removed_packages(remove_packages)
+    except Exception as e:
+        print(str(e))
+
+
+def remove_packages_by_month():
+    input_month = read_month()
+    try:
+        removed_packages = service.service_remove_packages_by_month(input_month)
+        print_removed_packages(removed_packages)
+    except Exception as e:
+        print(str(e))
+
+
 def read_start_date():
     start_date = input("Data start: ")
     return start_date
+
+
+def read_month():
+    month = input("Luna: ")
+    return month
+
+
+def print_average(average, destination):
+    print(f"Pretul mediu pentru destinatia {destination} este {average}")
 
 
 def read_end_date():
@@ -107,6 +195,10 @@ def print_packages(packages):
     print(f"Pachete returnate: ")
     for package in packages:
         print(package)
+
+
+def print_no_packages(no_packages):
+    print(f"Numarul de pachete este {no_packages}")
 
 
 def read_new_package():

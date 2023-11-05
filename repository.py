@@ -75,3 +75,55 @@ def get_packages_by_end_date(packages, end_date):
         if package.get_end_date() == end_date:
             packages_to_return.append(package)
     return packages_to_return
+
+
+def get_no_packages_by_destination(packages, destination):
+    no_packages = 0
+    for package in packages:
+        if package.get_destination() == destination:
+            no_packages += 1
+    return no_packages
+
+
+def get_average_price_by_destination(packages, destination):
+    no_packages = 0
+    sum_price = 0
+    for package in packages:
+        if package.get_destination() == destination:
+            no_packages += 1
+            sum_price += package.get_price()
+    if no_packages == 0:
+        return 0
+    return sum_price / no_packages
+
+
+def remove_packages_by_price_and_another_destination(packages, price, destination):
+    new_packages = []
+    removed_packages = []
+    for package in packages:
+        if package.get_destination() == destination and package.get_price() <= price:
+            new_packages.append(package)
+        else:
+            removed_packages.append(package)
+    packages[:] = new_packages
+    return removed_packages
+
+
+def remove_packages_by_month(packages, month):
+    new_packages = []
+    removed_packages = []
+    for package in packages:
+        if package.get_start_date().year == package.get_end_date.year:
+            if month < package.get_start_date().month or month > package.get_end_date().month:
+                new_packages.append(package)
+            else:
+                removed_packages.append(package)
+        elif package.get_end_date().year - package.get_start_date().year == 1:
+            if month < min(package.get_start_date().month, package.get_end_date().month) or month > max(
+                    package.get_start_date().month, package.get_end_date().month):
+                new_packages.append(package)
+            else:
+                removed_packages.append(package)
+        else:
+            removed_packages.append(package)
+    return removed_packages

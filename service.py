@@ -33,3 +33,35 @@ def service_remove_packages_by_price(price):
 def service_get_packages_by_date_interval(start_date, end_date):
     validation.validate_date(start_date, end_date)
     return repository.get_packages_by_date_interval(packages, start_date, end_date)
+
+
+def service_get_packages_by_destination_and_price(destination, price):
+    validation.validate_destination(destination)
+    validation.validate_price(price)
+    return repository.get_packages_by_destination_and_price(packages, destination, price)
+
+
+def service_get_packages_by_end_date(end_date):
+    validation.validate_date(None, end_date)
+    return repository.get_packages_by_end_date(packages, end_date)
+
+
+def service_get_no_packages_by_destination(destination):
+    validation.validate_destination(destination)
+    return repository.get_no_packages_by_destination(packages, destination)
+
+
+def service_get_average_price_by_destination(destination):
+    validation.validate_destination(destination)
+    return repository.get_average_price_by_destination(packages, destination)
+
+
+def service_remove_packages_by_price_and_another_destination(price, destination):
+    validation.validate_price(price)
+    validation.validate_destination(destination)
+    return repository.remove_packages_by_price_and_another_destination(packages, price, destination)
+
+
+def service_remove_packages_by_month(month):
+    validation.validate_month(month)
+    return repository.remove_packages_by_month(packages, month)

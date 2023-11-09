@@ -1,5 +1,7 @@
 import service
 
+service = service.Service()
+
 
 def show_menu():
     while True:
@@ -12,6 +14,11 @@ def show_menu():
         print("7. Tipareste pachete care au o destinatie data si pret mai mic decat o suma data")
         print("8. Tipareste pachete cu o anumita data de sfarsit")
         print("9. Tipareste numarul de oferte pentru o destinatie data")
+        print("10. Tipareste pachete care au un sejur intr-un interval dat in ordine sortata")
+        print("11. Tipareste pretul mediu pentru o destinatie")
+        print("12. Sterge pachete cu pret mai mare si o alta destinatie")
+        print("13. Sterge pachete care contin o anumita luna")
+        print("14. Operatie undo")
         command = input(">> ")
         if command == "1":
             create_package()
@@ -37,6 +44,10 @@ def show_menu():
             get_average_price_by_destination()
         if command == "12":
             remove_packages_by_price_and_another_destination()
+        if command == "13":
+            remove_packages_by_month()
+        if command == "14":
+            undo()
 
 
 def create_package():
@@ -45,6 +56,15 @@ def create_package():
         package = service.service_create_package(input_package["start_date"], input_package["end_date"],
                                                  input_package["destination"], input_package["price"])
         print(f"A fost creat urmatorul pachet {package}")
+    except Exception as e:
+        print(str(e))
+
+
+def undo():
+    try:
+        packages = service.undo_operation()
+        print("Operatia de undo realizata cu succes, pachetele ramate sunt: ")
+        print_packages(packages)
     except Exception as e:
         print(str(e))
 
@@ -113,7 +133,7 @@ def get_packages_by_interval_sorted():
     input_end_date = read_end_date()
     try:
         packages = service.service_get_packages_by_date_interval(input_start_date, input_end_date)
-        packages.sort(key=lambda x: x.price)
+        packages.sort(key=lambda x: x.get_price())
         print_packages(packages)
     except Exception as e:
         print(str(e))

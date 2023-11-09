@@ -1,33 +1,37 @@
 class Package:
-    def __init__(self, start_date, end_date, destination, price):
-        self.start_date = start_date
-        self.end_date = end_date
-        self.destination = destination
-        self.price = price
+    def __init__(self, package_id, start_date, end_date, destination, price):
+        self._package_id = package_id
+        self._start_date = start_date
+        self._end_date = end_date
+        self._destination = destination
+        self._price = price
+
+    def get_package_id(self):
+        return self._package_id
 
     def get_start_date(self):
-        return self.start_date
+        return self._start_date
 
     def get_end_date(self):
-        return self.end_date
+        return self._end_date
 
     def get_destination(self):
-        return self.destination
+        return self._destination
 
     def get_price(self):
-        return self.price
+        return self._price
 
     def set_start_date(self, start_date):
-        self.start_date = start_date
+        self._start_date = start_date
 
     def set_end_date(self, end_date):
-        self.end_date = end_date
+        self._end_date = end_date
 
     def set_destination(self, destination):
-        self.destination = destination
+        self._destination = destination
 
     def set_price(self, price):
-        self.price = price
+        self._price = price
 
     def __str__(self):
-        return f'Data start: {self.start_date}, Data sfarsit: {self.end_date}, Destinatie: {self.destination}, Pret: {self.price}'
+        return f'Data start: {self._start_date}, Data sfarsit: {self._end_date}, Destinatie: {self._destination}, Pret: {self._price}'
